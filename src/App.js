@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import RoleUserHierarchy from './components/RoleUserHierarchy';
+import HRBACView from './components/HRBACView';
 import StatsPanel from './components/StatsPanel';
 import { Button } from './components/ui/button';
 import { Card } from './components/ui/card';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('hierarchy');
+  const [activeTab, setActiveTab] = useState('hrbac');
   
   // Enhanced data structure with relationships
   const [hierarchyData, setHierarchyData] = useState({
@@ -82,12 +82,12 @@ function App() {
 
   const renderContent = () => {
     switch(activeTab) {
-      case 'hierarchy':
-        return <RoleUserHierarchy hierarchyData={hierarchyData} setHierarchyData={setHierarchyData} />;
+      case 'hrbac':
+        return <HRBACView hierarchyData={hierarchyData} />;
       case 'stats':
         return <StatsPanel hierarchyData={hierarchyData} />;
       default:
-        return <div className="text-center py-12 text-gray-500 text-lg">Coming Soon...</div>;
+        return <HRBACView hierarchyData={hierarchyData} />;
     }
   };
 
@@ -100,29 +100,9 @@ function App() {
           </h1>
           <div className="flex flex-wrap gap-2 sm:gap-4">
             <Button 
-              variant={activeTab === 'roles' ? 'secondary' : 'ghost'}
-              onClick={() => setActiveTab('roles')}
-              className={activeTab === 'roles' 
-                ? "text-gray-900 bg-white/90 hover:bg-white" 
-                : "text-white hover:text-white hover:bg-white/20"
-              }
-            >
-              Manage Roles
-            </Button>
-            <Button 
-              variant={activeTab === 'groups' ? 'secondary' : 'ghost'}
-              onClick={() => setActiveTab('groups')}
-              className={activeTab === 'groups' 
-                ? "text-gray-900 bg-white/90 hover:bg-white" 
-                : "text-white hover:text-white hover:bg-white/20"
-              }
-            >
-              Manage User Groups
-            </Button>
-            <Button 
-              variant={activeTab === 'hierarchy' ? 'secondary' : 'ghost'}
-              onClick={() => setActiveTab('hierarchy')}
-              className={activeTab === 'hierarchy' 
+              variant={activeTab === 'hrbac' ? 'secondary' : 'ghost'}
+              onClick={() => setActiveTab('hrbac')}
+              className={activeTab === 'hrbac' 
                 ? "text-gray-900 bg-white/90 hover:bg-white" 
                 : "text-white hover:text-white hover:bg-white/20"
               }

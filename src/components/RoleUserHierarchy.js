@@ -186,37 +186,42 @@ const RoleUserHierarchy = ({ hierarchyData, setHierarchyData }) => {
     );
   };
 
-  // Render Role → Users & User Groups hierarchy
+  // Render Role → User Groups → Users hierarchy
   const renderRoleHierarchy = (role) => {
-    const roleUsers = role.users?.map(userId => getEntityById(userId, 'user')).filter(Boolean) || [];
     const roleUserGroups = role.userGroups?.map(ugId => getEntityById(ugId, 'userGroup')).filter(Boolean) || [];
     
     return (
       <ExpandableTreeNode
         data={role}
-        hasChildren={roleUsers.length > 0 || roleUserGroups.length > 0}
+        hasChildren={roleUserGroups.length > 0}
         isExpanded={expandedNodes.has(role.id)}
         onExpand={handleNodeExpand}
       >
-        {/* Users with this role */}
-        {roleUsers.map(user => (
-          <ExpandableTreeNode
-            key={`user-${user.id}`}
-            data={user}
-            hasChildren={false}
-            isExpanded={false}
-          />
-        ))}
-        
-        {/* User groups with this role */}
-        {roleUserGroups.map(userGroup => (
-          <ExpandableTreeNode
-            key={`userGroup-${userGroup.id}`}
-            data={userGroup}
-            hasChildren={false}
-            isExpanded={false}
-          />
-        ))}
+        {/* User groups that have this role */}
+        {roleUserGroups.map(userGroup => {
+          // Get users in this user group
+          const usersInGroup = userGroup.users?.map(userId => getEntityById(userId, 'user')).filter(Boolean) || [];
+          
+          return (
+            <ExpandableTreeNode
+              key={`userGroup-${userGroup.id}`}
+              data={userGroup}
+              hasChildren={usersInGroup.length > 0}
+              isExpanded={expandedNodes.has(userGroup.id)}
+              onExpand={handleNodeExpand}
+            >
+              {/* Users within this user group */}
+              {usersInGroup.map(user => (
+                <ExpandableTreeNode
+                  key={`user-${user.id}`}
+                  data={user}
+                  hasChildren={false}
+                  isExpanded={false}
+                />
+              ))}
+            </ExpandableTreeNode>
+          );
+        })}
       </ExpandableTreeNode>
     );
   };
@@ -341,9 +346,9 @@ const RoleUserHierarchy = ({ hierarchyData, setHierarchyData }) => {
           <p className="text-sm text-blue-800">
             Once clicked on '+' sign, it will open further hierarchy as below to show 
             that this {viewMode.toLowerCase()} is connected to which {
-              viewMode === 'User' ? 'User Groups' :
+              viewMode === 'User' ? 'User Groups and their Roles' :
               viewMode === 'User Group' ? 'Users and Roles' :
-              'Users and User Groups'
+              'User Groups and their Users'
             }
           </p>
         </Card>
