@@ -24,7 +24,7 @@ const UserIcon = ({ type = 'user', size = 'medium' }) => {
         <User className="w-1/2 h-1/2" />
       </div>
     </div>
-  );
+  ); 
 };
 
 export default UserIcon; 
