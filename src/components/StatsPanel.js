@@ -4,10 +4,10 @@ import { Users, UserCheck, Shield, BarChart3 } from 'lucide-react';
 
 const StatsPanel = ({ hierarchyData }) => {
   const stats = {
-    totalUsers: 1, // Currently only one user supported
+    totalUsers: hierarchyData.users.length,
     totalUserGroups: hierarchyData.userGroups.length,
     totalRoles: hierarchyData.roles.length,
-    totalItems: 1 + hierarchyData.userGroups.length + hierarchyData.roles.length
+    totalItems: hierarchyData.users.length + hierarchyData.userGroups.length + hierarchyData.roles.length
   };
 
   const StatCard = ({ icon: Icon, label, value, className = "" }) => (

@@ -6,21 +6,77 @@ import { Card } from './components/ui/card';
 
 function App() {
   const [activeTab, setActiveTab] = useState('hierarchy');
+  
+  // Enhanced data structure with relationships
   const [hierarchyData, setHierarchyData] = useState({
-    user: {
-      id: 'user-1',
-      name: 'Admin User',
-      type: 'user'
-    },
+    users: [
+      { 
+        id: 'user-1', 
+        name: 'ABC', 
+        type: 'user',
+                 userGroups: ['ug-1', 'ug-2'], // User groups this user belongs to
+         roles: ['role-1', 'role-2'] // Direct roles assigned to user
+      },
+      { 
+        id: 'user-2', 
+        name: 'DEF', 
+        type: 'user',
+        userGroups: ['ug-2', 'ug-3'],
+        roles: ['role-2', 'role-3']
+      },
+      { 
+        id: 'user-3', 
+        name: 'GHI', 
+        type: 'user',
+        userGroups: ['ug-1'],
+        roles: ['role-1']
+      }
+    ],
     userGroups: [
-      { id: 'ug-1', name: 'Managers', type: 'userGroup' },
-      { id: 'ug-2', name: 'Developers', type: 'userGroup' },
-      { id: 'ug-3', name: 'Analysts', type: 'userGroup' }
+      { 
+        id: 'ug-1', 
+        name: 'Finance - I', 
+        type: 'userGroup',
+        users: ['user-1', 'user-3'], // Users in this group
+        roles: ['role-1', 'role-2'] // Roles assigned to this group
+      },
+      { 
+        id: 'ug-2', 
+        name: 'Finance - II', 
+        type: 'userGroup',
+        users: ['user-1', 'user-2'],
+        roles: ['role-2', 'role-3']
+      },
+      { 
+        id: 'ug-3', 
+        name: 'Payroll - I', 
+        type: 'userGroup',
+        users: ['user-2'],
+        roles: ['role-3']
+      }
     ],
     roles: [
-      { id: 'role-1', name: 'Admin', type: 'role' },
-      { id: 'role-2', name: 'Editor', type: 'role' },
-      { id: 'role-3', name: 'Viewer', type: 'role' }
+      { 
+        id: 'role-1', 
+        name: 'Admin', 
+        type: 'role',
+        users: ['user-1', 'user-3'], // Users with this role
+        userGroups: ['ug-1'] // User groups with this role
+      },
+      { 
+        id: 'role-2', 
+        name: 'Developer', 
+        type: 'role',
+        users: ['user-1', 'user-2'],
+        userGroups: ['ug-1', 'ug-2']
+      },
+      { 
+        id: 'role-3', 
+        name: 'Team Lead', 
+        type: 'role',
+        users: ['user-2'],
+        userGroups: ['ug-2', 'ug-3']
+      }
     ]
   });
 
