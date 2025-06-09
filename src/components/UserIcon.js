@@ -13,7 +13,7 @@ const UserIcon = ({ type = 'user', size = 'medium' }) => {
     user: 'bg-blue-500 border-blue-100',
     userGroup: 'bg-green-500 border-green-100',
     role: 'bg-purple-500 border-purple-100'
-  }; 
+  };   
 
   return (
     <div className={cn('relative z-10', sizeClasses[size])}>
