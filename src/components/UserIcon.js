@@ -2,7 +2,7 @@ import React from 'react';
 import { User } from 'lucide-react';
 import { cn } from '../lib/utils';
 
-const UserIcon = ({ type = 'user', size = 'medium' }) => {
+const UserIcon = ({ type = 'user', size = 'medium' }) => { 
   const sizeClasses = {
     small: 'w-12 h-12',
     medium: 'w-16 h-16 sm:w-20 sm:h-20',
